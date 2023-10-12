@@ -78,5 +78,31 @@ app.post('/messages/save', async (req, res) => {
   }
 })
 
+
+// app.get('/AboutUs', (req, res) => {
+//   res.json({
+//       paragraphs: [
+//           "Hello! My name is Tracy.",
+//       ],
+//       imageUrl: "TracyZhang.jpg"
+//   });
+// });
+app.get('/about', async (req, res) => {
+  try {
+    res.json({
+      text: `Hi! My name is Tracy`,
+      photo: `/Users/ceicei/Documents/Fall2023/Agile/3-simple-mern-stack-app-Ceiceiceii/back-end/TracyZhang.jpg`,
+      status: 'all good',
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(400).json({
+      error: err,
+      status: 'failed to retrieve messages from the database',
+    })
+  }
+})
+
+
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!
