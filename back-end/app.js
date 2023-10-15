@@ -11,7 +11,6 @@ app.use(cors()) // allow cross-origin resource sharing
 // use express's builtin body-parser middleware to parse any data included in a request
 app.use(express.json()) // decode JSON-formatted incoming POST data
 app.use(express.urlencoded({ extended: true })) // decode url-encoded incoming POST data
-
 // connect to database
 mongoose
   .connect(`${process.env.DB_CONNECTION_STRING}`)
@@ -21,7 +20,7 @@ mongoose
 // load the dataabase models we want to deal with
 const { Message } = require('./models/Message')
 const { User } = require('./models/User')
-
+app.use(express.static('public'));
 // a route to handle fetching all messages
 app.get('/messages', async (req, res) => {
   // load all messages from database
@@ -78,31 +77,22 @@ app.post('/messages/save', async (req, res) => {
   }
 })
 
+app.get('/aboutus', async (req, res) => {
 
-// app.get('/AboutUs', (req, res) => {
-//   res.json({
-//       paragraphs: [
-//           "Hello! My name is Tracy.",
-//       ],
-//       imageUrl: "TracyZhang.jpg"
-//   });
-// });
-app.get('/about', async (req, res) => {
-  try {
-    res.json({
-      text: `Hi! My name is Tracy`,
-      photo: `/Users/ceicei/Documents/Fall2023/Agile/3-simple-mern-stack-app-Ceiceiceii/back-end/TracyZhang.jpg`,
-      status: 'all good',
-    })
-  } catch (err) {
-    console.error(err)
-    res.status(400).json({
-      error: err,
-      status: 'failed to retrieve messages from the database',
-    })
-  }
+
+  const paragraph1 = `Hi, my name is Tracy.`
+
+  const paragraph2 = `I am a student in NYU, major in Data Science and Psychology
+  , I am vary interested in Agile Software envineering. I am sure I will learn alot
+  and have a better understanding of full stack programming in this course.`
+
+  res.send({
+    text1: paragraph1,
+    text2: paragraph2,
+    imageUrl: ''
+  });
+
 })
-
 
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!
